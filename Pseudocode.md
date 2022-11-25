@@ -1,5 +1,5 @@
 
-
+//create models
 //models:
   //user
     //username
@@ -12,7 +12,13 @@
     //username
     //reactions
       //reactions- subdocument schema of thought
-
-
 //schema settings- virtuals **
+
+//create routes
+
+//write controllers
+
+//utils
+  //seed.js
+  //data.js
 

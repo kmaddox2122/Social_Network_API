@@ -22,3 +22,10 @@
   //seed.js
   //data.js
 
+
+//TODO NEXT: 
+  //check routes for: 
+    **`/api/users/:userId/friends/:friendId`**
+    **`/api/thoughts/:thoughtId/reactions`**
+
+  //then seed data

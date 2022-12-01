@@ -14,24 +14,24 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      validate: {
-        validator: () => Promise.resolve(false),
-        message: 'Email validation failed'
-      }
+      match: [/(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/,'email invalid']
+      // validate: {
+      //   validator: () => Promise.resolve(false),
+      //   message: 'Email validation failed'
+      // }
     },
     //* `thoughts`
-      //* Array of `_id` values referencing the `Thought` model  --TODO make array?
-    thoughts_id: {
+      //* Array of `_id` values referencing the `Thought` model  
+    thoughts: [{
       type: Schema.Types.ObjectId,
-      ref: 'Thought',
-    },
+      ref: 'thought',
+    }],
     //* `friends`
-      //* Array of `_id` values referencing the `User` model (self-reference) --TODO make array?
-    friends_id: {
+      //* Array of `_id` values referencing the `User` model (self-reference) 
+    friends: [{
       type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    assignments: [assignmentSchema],
+      ref: 'user',
+    }],
   },
   {
     toJSON: {
@@ -40,9 +40,8 @@ const userSchema = new Schema(
   }
 );
 //Create a virtual called `friendCount` that retrieves the length of the user's `friends` array field on query.
-//TODO adjust for on query?
 userSchema.virtual('friendCount').get(function () {
-  return this.friends_id.length;
+  return this.friends.length;
 });
 
 const User = model('user', userSchema);

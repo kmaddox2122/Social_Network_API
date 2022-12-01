@@ -1,8 +1,9 @@
 const { User, Thought } = require('../models');
+const userController = require('./userController');
 
 module.exports = {
   // Get all thoughts
-  getThought(req, res) {
+  getAllThought(req, res) {
     Thought.find()
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
@@ -21,7 +22,11 @@ module.exports = {
   // Create a thought
   createThought(req, res) {
     Thought.create(req.body)
-      .then((thought) => res.json(thought))
+      .then((thought) => {
+        return User.findOneAndUpdate({username: thought.username}, {$push:{thoughts:thought}})
+      }) .then ((thought) => {
+        res.json(thought)
+      })
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -29,7 +34,7 @@ module.exports = {
   },
   // Delete a thought
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.courseId })
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
     .then((thought) =>
     !thought
       ? res.status(404).json({ message: 'No thought with that ID' })
@@ -40,7 +45,7 @@ module.exports = {
   // Update a thought
   updateThought(req, res) {
     Thought.findOneAndUpdate(
-      { _id: req.params.courseId },
+      { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
     )

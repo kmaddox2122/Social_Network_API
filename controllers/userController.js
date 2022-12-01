@@ -5,7 +5,10 @@ module.exports = {
   getAllUsers(req, res) {
     User.find()
       .then((user) => res.json(user))
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err)
+        res.status(500).json(err)
+      });
   },
   // Get a single user
   getSingleUser(req, res) {
@@ -29,8 +32,8 @@ module.exports = {
   },
   // Delete a user
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params.courseId })
-      .then((course) =>
+    User.findOneAndDelete({ _id: req.params.userId })
+      .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
           //TODO remove users associated thoughts
@@ -53,4 +56,30 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+ // add a friend
+  addFriend(req, res) {
+    User.findOneAndUpdate({_id:req.params.userId},{$addToSet:{friends:req.params.friendId}},{new: true})
+      .then(async(user) => {
+        const friend = await User.findOneAndUpdate({_id:req.params.friendId},{$addToSet:{friends:req.params.userId}},{new: true})
+        return [
+          friend, user
+      ]})
+      .then((user) => res.json(user))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
+  //remove a friend
+  removeFriend(req, res) {
+    User.findOneAndUpdate({_id:req.params.userId},{$pull:{friends:req.params.friendId}},{new: true})
+      .then(async(user) => {
+        const friend = await User.findByIdAndUpdate({_id:req.params.friendId},{$pull:{friends:req.params.userId}},{new:true})
+        return [
+          friend, user
+        ]})
+      .then(() => res.json({ message: 'User and Thoughts deleted!' }))
+      .catch((err) => res.status(500).json(err));
+  },
 };
+

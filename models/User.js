@@ -15,10 +15,6 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       match: [/(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/,'email invalid']
-      // validate: {
-      //   validator: () => Promise.resolve(false),
-      //   message: 'Email validation failed'
-      // }
     },
     //* `thoughts`
       //* Array of `_id` values referencing the `Thought` model  

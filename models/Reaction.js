@@ -2,7 +2,7 @@
 
 const { Schema, model } = require('mongoose');
 
-const reactionsSchema = new Schema (
+const reactionsSchema = new Schema ({
   //* TODO Includes Reactions as the `reaction` field's subdocument schema in the Thought model.
   //  * TODO Array of nested documents created with the `reactionSchema`
   reactionId: {
@@ -27,7 +27,7 @@ const reactionsSchema = new Schema (
     //getter to format time stamp
     timestamps: true,
   },   
-)
+})
 
 const Reactions = model('reactions', reactionsSchema);
 

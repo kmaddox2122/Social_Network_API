@@ -60,7 +60,6 @@ module.exports = {
   //Create a reaction  -- currently returns a 200 with "wrong route"
   createReaction(req, res) {
     console.log('You are adding a reaction');
-    console.log(err);
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
@@ -74,10 +73,9 @@ module.exports = {
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
-      console.log(err);
   },
 
-  //remove a reaction by ID -- route coming back as a 200 status but "wrong route"
+  //remove a reaction by ID -- route works but didn't delete reaction
   deleteReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },

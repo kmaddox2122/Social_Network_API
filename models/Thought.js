@@ -1,10 +1,11 @@
 const { Schema, model } = require('mongoose');
 
 const reactionsSchema = new Schema ({
-    //* TODO Includes Reactions as the `reaction` field's subdocument schema in the Thought model.
-    //  * TODO Array of nested documents created with the `reactionSchema`
+    //Includes Reactions as the `reaction` field's subdocument schema in the Thought model.
+    //Array of nested documents created with the `reactionSchema`
     reactionId: {
       type: Schema.Types.ObjectId, 
+      default: () => new Types.ObjectId(),
       //Default value is set to a new ObjectId
     },
     reactionBody: {
@@ -20,7 +21,6 @@ const reactionsSchema = new Schema ({
     createdAt: {
       type: Date,
       //Set default value to the current timestamp
-      //TODO: is this line needed???
       default: Date.now(),
       //getter to format time stamp
       timestamps: true,
@@ -40,9 +40,8 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       //Set default value to the current timestamp
-      //TODO: is this line needed???
       default: Date.now(),
-      //getter to format time stamp - TODO is this all to write for timestamp???
+      //getter to format time stamp
       timestamps: true,
     },
     username: {

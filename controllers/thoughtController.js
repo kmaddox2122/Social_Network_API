@@ -20,12 +20,16 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // Create a thought
+  // add a .populate to show thought with user
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
+        console.log(thought)
         return User.findOneAndUpdate({username: thought.username}, {$push:{thoughts:thought}})
-      }) .then ((thought) => {
-        res.json(thought)
+      }) .then ((user, thought) => {
+        !user
+          ? res.status(404).json({ message: 'No user with that ID' })
+          : res.json(thought)
       })
       .catch((err) => {
         console.log(err);
@@ -57,7 +61,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  //Create a reaction  -- currently returns a 200 with "wrong route"
+  //Create a reaction 
   createReaction(req, res) {
     console.log('You are adding a reaction');
     Thought.findOneAndUpdate(
@@ -75,11 +79,11 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  //remove a reaction by ID -- route works but didn't delete reaction
+  //remove a reaction by ID 
   deleteReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reaction: { reactionId: req.params.reactionId } } },
+      { $pull: { reactions: { reaction_id: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
       .then((thought) =>

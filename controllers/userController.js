@@ -78,7 +78,7 @@ module.exports = {
         return [
           friend, user
         ]})
-      .then(() => res.json({ message: 'User and Thoughts deleted!' }))
+      .then(() => res.json({ message: 'You have lost a friend!' }))
       .catch((err) => res.status(500).json(err));
   },
 };

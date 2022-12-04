@@ -5,7 +5,7 @@ const reactionsSchema = new Schema ({
     //Array of nested documents created with the `reactionSchema`
     reactionId: {
       type: Schema.Types.ObjectId, 
-      default: () => new Types.ObjectId(),
+      // default: () => new Types.ObjectId(),
       //Default value is set to a new ObjectId
     },
     reactionBody: {

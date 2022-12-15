@@ -22,10 +22,6 @@ Here is an example of the GET route for users in Insomnia:
 
 Throughout this project, I have become more comfortable with file structures and the flow of routes. I also gained some troubleshooting practice, as with most projects, and learned new ways to solve errors.
 
-## Credits
-
-Referenced previous class assignments and practices. 
-
 ## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

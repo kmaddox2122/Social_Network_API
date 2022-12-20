@@ -1,4 +1,4 @@
-# NoSQL_Social_Network_API
+# Social_Network_API
 
 ## Description
 
